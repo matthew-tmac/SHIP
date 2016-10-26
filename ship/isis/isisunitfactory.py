@@ -41,6 +41,7 @@ from ship.isis.datunits import orificeunit
 from ship.isis.datunits import culvertunit
 from ship.isis.datunits import htbdyunit 
 from ship.isis.datunits import interpolateunit 
+from ship.isis.datunits import conduitunit
 
 import logging
 logger = logging.getLogger(__name__)
@@ -87,6 +88,7 @@ class IsisUnitFactory(object):
                                 'culvert': culvertunit.CulvertOutletUnit,
                                 'htbdy': htbdyunit.HtbdyUnit,
                                 'interolate': interpolateunit.InterpolateUnit,
+                                'conduit': conduitunit.SymmetricalConduitUnit
                                }
         try:
             self._getFileKeys()
@@ -144,6 +146,12 @@ class IsisUnitFactory(object):
                 unit = culvertunit.CulvertInletUnit()
             else:
                 unit = culvertunit.CulvertOutletUnit()
+                
+        elif key == 'conduit':
+            if contents[file_line + 1].strip().startswith('SECTION'):
+                unit = conduitunit.SymmetricalConduitUnit()
+            else:
+                return file_line, False
         
         # All other units only need a file_order for their constructor.
         else:
