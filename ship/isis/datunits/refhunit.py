@@ -77,7 +77,7 @@ class RefhUnit(AIsisUnit):
                           'rainfall_comment': '', 'rainfall_od': 0.0,
                           'return_period': 0, 'arf': 0.0, 'c': 0.0, 'd1': 0.0,
                           'd2': 0.0, 'd3': 0.0, 'e': 0.0, 'f': 0.0, 
-                          'rp_flag': '', 'scf_flag': '', 'scf': 0.0, 'unknown': 0,
+                          'rp_flag': '', 'scf_flag': '', 'scf': 0.0, 'refine_rp': '', 'unknown': 0,
                           'storm_rows': 0, 'cmax_flag': '', 'cini_flag': '',
                           'alpha_flag': '', 'models_comment': '', 'cm_dcf': 0.0,
                           'cmax': 0.0, 'cini': 0.0, 'alpha': 0.0, 'bfihost': 0.0,
@@ -185,6 +185,7 @@ class RefhUnit(AIsisUnit):
         self.head_data['rp_flag'] = unit_data[file_line+3][0:10].strip()
         self.head_data['scf_flag'] = unit_data[file_line+3][10:20].strip()
         self.head_data['scf'] = unit_data[file_line+3][20:30].strip()
+        self.head_data['refine_rp'] = unit_data[file_line+3][30:40].strip()
         self.head_data['storm_rows'] = unit_data[file_line+4][0:10].strip()
         
         file_line = file_line + 5
@@ -317,7 +318,8 @@ class RefhUnit(AIsisUnit):
                         '{:>10}'.format(self.head_data['f']))
         out_data.append('{:>10}'.format(self.head_data['rp_flag']) + 
                         '{:>10}'.format(self.head_data['scf_flag']) +
-                        '{:>10}'.format(self.head_data['scf']))
+                        '{:>10}'.format(self.head_data['scf']) +
+                        '{:>10}'.format(self.head_data['refine_rp']))
         out_data.append('{:>10}'.format(self.head_data['storm_rows'])) 
             
         return out_data
